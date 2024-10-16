@@ -1,0 +1,79 @@
+/* Styles de base pour la page de mise à jour du profil */
+body {
+    background-color: #f4f4f4;
+    font-family: 'Poppins', sans-serif;
+}
+
+.container {
+    max-width: 600px; /* Limite la largeur du conteneur */
+    margin: 40px auto; /* Centre verticalement et horizontalement */
+    background-color: #fff; /* Fond blanc */
+    padding: 20px; /* Espacement intérieur */
+    border-radius: 8px; /* Coins arrondis */
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Ombre légère */
+}
+
+h2 {
+    text-align: center; /* Centre le titre principal */
+    color: #003366; /* Couleur du titre */
+    margin-bottom: 20px; /* Espacement en bas */
+}
+
+h4 {
+    color: #00539C; /* Couleur des sous-titres */
+    margin-bottom: 10px; /* Espacement en bas des sous-titres */
+    border-bottom: 1px solid #ccc; /* Ligne de séparation sous les sous-titres */
+    padding-bottom: 5px; /* Espacement intérieur sous les sous-titres */
+}
+
+form {
+    display: flex;
+    flex-direction: column; /* Dispose les éléments du formulaire verticalement */
+}
+
+form div {
+    margin-bottom: 20px; /* Espace entre les sections */
+}
+
+form input, form select {
+    width: 100%; /* Champs pleine largeur */
+    padding: 10px; /* Espacement intérieur */
+    margin-top: 5px; /* Espace en haut des champs */
+    border: 1px solid #ccc; /* Bordure légère */
+    border-radius: 4px; /* Coins arrondis */
+    font-size: 16px; /* Taille de police */
+    transition: border-color 0.3s; /* Transition douce pour le focus */
+}
+
+form input:focus, form select:focus {
+    border-color: #00539C; /* Change la couleur de la bordure au focus */
+    outline: none; /* Retire l'outline par défaut */
+}
+
+button {
+    background-color: #003366; /* Couleur de fond du bouton */
+    color: #fff; /* Couleur du texte */
+    padding: 10px; /* Espacement intérieur */
+    border: none; /* Pas de bordure */
+    border-radius: 4px; /* Coins arrondis */
+    cursor: pointer; /* Curseur pointer */
+    font-size: 16px; /* Taille de la police */
+    transition: background-color 0.3s; /* Transition douce pour le survol */
+}
+
+button:hover {
+    background-color: #00539C; /* Couleur de fond au survol */
+}
+
+ul {
+    margin-top: 10px;
+    color: red; /* Couleur des messages d'erreur */
+}
+
+/* Ajouter une bordure et espacement autour des formulaires */
+form div {
+    padding: 15px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    border: 1px solid #e0e0e0;
+}

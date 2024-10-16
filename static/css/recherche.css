@@ -1,0 +1,25 @@
+.search-container {
+    display: flex; /* Utilisation du flexbox pour aligner le champ et l'icône */
+    align-items: center; /* Centre verticalement l'élément */
+    background-color: #f1f1f1; /* Couleur de fond */
+    border-radius: 25px; /* Coins arrondis */
+    padding: 10px 15px; /* Espacement intérieur */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Ombre pour donner de la profondeur */
+    max-width: 400px; /* Largeur maximale */
+    margin: 0 auto; /* Centre horizontalement */
+}
+
+.search-container input {
+    border: none; /* Retire la bordure par défaut */
+    outline: none; /* Retire l'effet de focus par défaut */
+    flex: 1; /* Prend tout l'espace disponible */
+    font-size: 16px; /* Taille de police */
+    padding: 10px; /* Espacement intérieur */
+    border-radius: 25px; /* Coins arrondis pour le champ de recherche */
+    background-color: transparent; /* Fond transparent */
+}
+
+.search-container input::placeholder {
+    color: #999; /* Couleur du texte de l'espace réservé */
+    opacity: 0.8; /* Légèrement transparent */
+}

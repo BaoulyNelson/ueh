@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+<link rel="stylesheet" href="{% static 'css/formulaire.css' %}">
+<div class="container mt-5 py-4 px-4 shadow-lg rounded bg-light">
+    <h2 class="text-center mb-4">Sélectionner une Entité</h2>
+    <form method="post" novalidate class="needs-validation">
+        {% csrf_token %}
+        <div class="form-group">
+            {{ formulaire.nom.label }}  <!-- Affiche le label pour le champ 'nom' -->
+            {{ formulaire.nom }}  <!-- Affiche le champ déroulant -->
+            {% if formulaire.nom.errors %}  <!-- Affiche les erreurs si présentes -->
+                <div class="text-danger">
+                    {% for error in formulaire.nom.errors %}
+                        <p>{{ error }}</p>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        </div>
+        <div class="text-center mt-3">
+            <button type="submit" class="btn btn-success btn-lg">Sélectionner Entité</button>
+          
+        </div>
+    </form>
+
+    <div class="text-center mt-4">
+        <a href="{% url 'details' 'utilisateur' request.user.id %}" class="btn btn-outline-secondary">Retour au profil</a>
+    </div>
+</div>
+{% endblock %}

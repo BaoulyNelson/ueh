@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+
+{% block content %}
+{% load static %}
+
+<link rel="stylesheet" href="{% static 'css/formulaire.css' %}">
+
+     <!-- Bloc pour afficher les messages -->
+     {% if messages %}
+     <ul>
+         {% for message in messages %}
+             <li class="{% if message.tags %} {{ message.tags }} {% endif %}">{{ message }}</li>
+         {% endfor %}
+     </ul>
+    {% endif %}
+
+    
+    <h2 class="mb-4 text-primary">Modifier l'Entité : {{ objet.nom }}</h2>
+
+    <form method="POST" class="needs-validation" novalidate>
+        {% csrf_token %}
+    
+        {% if formulaire.errors %}
+            <div class="alert alert-danger">
+                <strong>Erreurs dans le formulaire :</strong>
+                <ul>
+                    {% for field in formulaire %}
+                        {% for error in field.errors %}
+                            <li>{{ field.label }} : {{ error }}</li>
+                        {% endfor %}
+                    {% endfor %}
+                </ul>
+            </div>
+        {% endif %}
+    
+        <label for="nouvelle_entite">Choisir une nouvelle entité :</label>
+<select name="nouvelle_entite" id="nouvelle_entite" required>
+    <option value="">Sélectionner une entité</option>
+    {% for entite in entites %}
+        <option value="{{ entite.id }}" {% if entite.id == objet.id %}selected{% endif %}>
+            {{ entite.nom }}
+        </option>
+    {% endfor %}
+</select>
+
+    
+        <div class="text-center mt-4">
+            <button type="submit" class="btn btn-primary btn-lg">Mettre à jour</button>
+            <a href="{% url 'details' 'utilisateur' request.user.id %}" class="btn btn-outline-secondary">Retour au profil</a>
+
+        </div>
+    </form>
+    
+{% endblock %}

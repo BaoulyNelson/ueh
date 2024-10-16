@@ -1,0 +1,66 @@
+/* Styles pour la page de connexion */
+body {
+    background-color: #f4f4f4; /* Couleur de fond douce */
+    font-family: 'Poppins', sans-serif; /* Police moderne */
+}
+
+h2 {
+    text-align: center; /* Centrer le titre */
+    color: #003366; /* Couleur du texte */
+    margin-bottom: 20px; /* Espacement en bas */
+}
+
+form {
+    max-width: 400px; /* Largeur maximale du formulaire */
+    margin: 0 auto; /* Centrer le formulaire */
+    background-color: #fff; /* Fond blanc */
+    padding: 20px; /* Espacement intérieur */
+    border-radius: 8px; /* Coins arrondis */
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Ombre légère */
+}
+
+form input {
+    width: 100%; /* Largeur pleine pour les champs de saisie */
+    padding: 10px; /* Espacement intérieur */
+    margin: 10px 0; /* Marges pour espacer les champs */
+    border: 1px solid #ccc; /* Bordure légère */
+    border-radius: 4px; /* Coins arrondis */
+    transition: border-color 0.3s; /* Transition pour changement de couleur */
+}
+
+form input:focus {
+    border-color: #00539C; /* Couleur de bordure au focus */
+    outline: none; /* Supprimer l'outline par défaut */
+}
+
+button {
+    background-color: #003366; /* Couleur de fond du bouton */
+    color: #fff; /* Couleur du texte du bouton */
+    padding: 10px; /* Espacement intérieur */
+    border: none; /* Pas de bordure */
+    border-radius: 4px; /* Coins arrondis */
+    cursor: pointer; /* Curseur pointer */
+    width: 100%; /* Largeur pleine */
+    transition: background-color 0.3s; /* Transition douce */
+}
+
+button:hover {
+    background-color: #00539C; /* Couleur de fond au survol */
+}
+
+ul {
+    margin-top: 10px; /* Espacement en haut */
+    color: red; /* Couleur des messages d'erreur */
+}
+
+a {
+    display: block; /* Afficher en bloc pour centrer */
+    text-align: center; /* Centre le lien */
+    margin-top: 15px; /* Espacement en haut */
+    color: #003366; /* Couleur du lien */
+    text-decoration: none; /* Pas de soulignement */
+}
+
+a:hover {
+    text-decoration: underline; /* Soulignement au survol */
+}

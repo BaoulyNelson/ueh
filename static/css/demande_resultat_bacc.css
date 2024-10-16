@@ -1,0 +1,87 @@
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 90vh;
+
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+.form-container {
+    border: 1px solid #ccc;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+h2 {
+    margin-bottom: 20px;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 16px;
+    margin-bottom: 20px;
+    color: #666;
+}
+
+.input-group {
+    margin-bottom: 20px;
+}
+
+.input-group label {
+    display: block;
+    font-size: 14px;
+    margin-bottom: 5px;
+    
+}
+
+.input-group input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #f39c12;
+    border-radius: 5px;
+}
+
+.button-group {
+    display: flex;
+    justify-content: space-between;
+}
+
+button {
+    border: none;
+    padding: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+    width: 30%;
+}
+
+.bac-unique {
+    background-color: #4CAF50;
+    color: white;
+}
+
+.perm-ns4 {
+    background-color: #00BFFF;
+    color: white;
+}
+
+.perm-philo {
+    background-color: #FFA500;
+    color: white;
+}
+
+/* Media Queries pour ajuster le style sur des écrans plus petits */
+@media (max-width: 768px) {
+    .navbar ul li a {
+        font-size: 12px; /* Réduit la taille de la police sur les petits écrans */
+        padding: 8px 10px; /* Réduit le padding */
+    }
+
+    .form-container {
+        width: 90%; /* Ajuste la largeur du formulaire */
+    }
+}

@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Confirmation de Supression</title>
+    <!-- Lien vers Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/confirmer_suppression_compte.css' %}">
+</head>
+<body>
+
+  <div class="confirmation-box">
+    <h2>Confirmation de Suppression de Compte</h2>
+    <p>Êtes-vous sûr de vouloir supprimer ?</p>
+
+    <form method="post">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-danger">Oui, Supprimer</button>
+        <a href="{% url 'details' 'utilisateur' request.user.id %}" class="btn btn-outline-secondary">Retour au profil</a>
+    </form>
+</div>
+
+
+<!-- Inclure Bootstrap JS et jQuery -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+</body>
+</html>

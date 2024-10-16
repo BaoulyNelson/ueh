@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+<link rel="stylesheet" href="{% static 'css/formulaire.css' %}">
+<div class="container mt-5 py-4 px-4 shadow-lg rounded bg-light">
+    <h2 class="text-center mb-4">Ajouter une Étude</h2>
+    <form method="post" novalidate class="needs-validation">
+        {% csrf_token %}
+        <div class="form-group">
+            {{ formulaire.as_p }}  <!-- Affiche le formulaire avec des balises <p> -->
+        </div>
+        <div class="text-center mt-3">
+            <button type="submit" class="btn btn-success btn-lg">Ajouter Étude</button>
+        </div>
+    </form>
+
+    <div class="text-center mt-4">
+        <a href="{% url 'details' 'utilisateur' request.user.id %}" class="btn btn-outline-secondary">Retour au profil</a>
+    </div>
+</div>
+{% endblock %}

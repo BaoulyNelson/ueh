@@ -1,0 +1,56 @@
+
+{% extends "base.html" %}
+
+{% block title %}Verification Diplome{% endblock %}
+
+{% block content %}
+{% load static %}
+<link rel="stylesheet" href="{% static 'css/verification_diplome.css' %}">
+
+<div class="scanner-container">
+    <h1>Scanner votre diplôme</h1>
+    <video id="scanner" width="600" height="400" autoplay></video>
+    <button id="capture">Capturer</button>
+    <canvas id="canvas" style="display:none;"></canvas>
+</div>
+
+
+    <script>
+        const video = document.getElementById('scanner');
+        const canvas = document.getElementById('canvas');
+        const captureButton = document.getElementById('capture');
+
+        // Accéder à la caméra
+        navigator.mediaDevices.getUserMedia({ video: true })
+            .then((stream) => {
+                video.srcObject = stream;
+            })
+            .catch((err) => {
+                console.error("Erreur d'accès à la caméra : ", err);
+            });
+
+        // Capturer une image
+        captureButton.addEventListener('click', () => {
+            canvas.width = video.videoWidth;
+            canvas.height = video.videoHeight;
+            canvas.getContext('2d').drawImage(video, 0, 0);
+            const dataURL = canvas.toDataURL('image/png');
+
+            // Envoyer l'image capturée au serveur Django via une requête AJAX ou Fetch API
+            fetch('/upload_scan/', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': '{{ csrf_token }}'
+                },
+                body: JSON.stringify({ image: dataURL })
+            }).then(response => {
+                if (response.ok) {
+                    alert('Scan envoyé avec succès');
+                } else {
+                    alert('Erreur lors de l\'envoi');
+                }
+            });
+        });
+    </script>
+    {% endblock %}

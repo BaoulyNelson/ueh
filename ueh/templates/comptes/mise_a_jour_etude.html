@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+
+{% block content %}
+{% load static %}
+
+<link rel="stylesheet" href="{% static 'css/formulaire.css' %}">
+
+     <!-- Bloc pour afficher les messages -->
+     {% if messages %}
+     <ul>
+         {% for message in messages %}
+             <li class="{% if message.tags %} {{ message.tags }} {% endif %}">{{ message }}</li>
+         {% endfor %}
+     </ul>
+    {% endif %}
+    
+<div class="container mt-5 p-4 bg-light shadow-sm rounded">
+    <h2 class="text-center mb-4">Modifier l'Étude</h2>
+    <form method="post" class="needs-validation" novalidate>
+        {% csrf_token %}
+        <div class="form-group">
+            {{ formulaire.as_p }} <!-- Affiche le formulaire avec des balises <p> -->
+        </div>
+        <div class="text-center mt-4">
+            <button type="submit" class="btn btn-primary btn-lg">Mettre à jour</button>
+            <a href="{% url 'details' 'utilisateur' request.user.id %}" class="btn btn-outline-secondary">Retour au profil</a>
+
+        </div>
+    </form>
+</div>
+{% endblock %}

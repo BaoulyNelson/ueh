@@ -1,0 +1,83 @@
+{% extends "base.html" %}
+
+{% load static %}
+
+{% block content %}
+<link rel="stylesheet" href="{% static 'css/formulaire.css' %}">
+
+<div class="container mt-5 py-4 px-4 shadow-lg rounded bg-light">
+
+        <h2 class="text-center mb-4">Ajouter une Adresse</h2>
+        
+        <form method="post" novalidate class="needs-validation">
+
+            {% csrf_token %}
+            
+            <div class="mb-3">
+                <label for="id_no" class="form-label">Numéro</label>
+                {{ formulaire.no.errors }}
+                {{ formulaire.no }}
+            </div>
+
+            <div class="mb-3">
+                <label for="id_adresse" class="form-label">Adresse</label>
+                {{ formulaire.adresse.errors }}
+                {{ formulaire.adresse }}
+            </div>
+
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <label for="id_departement" class="form-label">Département</label>
+                    {{ formulaire.departement.errors }}
+                    {{ formulaire.departement }}
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label for="id_commune" class="form-label">Commune</label>
+                    {{ formulaire.commune.errors }}
+                    {{ formulaire.commune }}
+                </div>
+            </div>
+
+            <div class="text-center mt-3">
+                <button type="submit" class="btn btn-success btn-lg">Ajouter Adresse</button>
+            </div>
+        </form>
+
+        <div class="text-center mt-4">
+            <a href="{% url 'details' 'utilisateur' request.user.id %}" class="btn btn-outline-secondary">Retour au profil</a>
+        </div>
+    </div>
+
+    <!-- Ton template pour le formulaire -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<script type="text/javascript">
+    $(document).ready(function() {
+        $('#id_departement').change(function() {
+            var departementId = $(this).val();
+            var communeSelect = $('#id_commune');
+
+            // Vider le champ des communes avant de charger les nouvelles
+            communeSelect.empty();
+
+            if (departementId) {
+                $.ajax({
+                    url: '{% url "charger_communes" %}',
+                    data: {
+                        'departement': departementId
+                    },
+                    success: function(data) {
+                        // Ajouter les options de communes
+                        $.each(data, function(index, item) {
+                            communeSelect.append(new Option(item.nom, item.id));
+                        });
+                    }
+                });
+            }
+        });
+    });
+</script>
+
+
+{% endblock %}
+

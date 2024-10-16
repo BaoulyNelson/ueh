@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+     <!-- Bloc pour afficher les messages -->
+     {% if messages %}
+     <ul>
+         {% for message in messages %}
+             <li class="{% if message.tags %} {{ message.tags }} {% endif %}">{{ message }}</li>
+         {% endfor %}
+     </ul>
+    {% endif %}
+<div class="container mt-5 py-4 px-4 shadow-lg rounded bg-light">
+    <h2 class="text-center mb-4">Supprimer une Adresse</h2>
+    <p>Êtes-vous sûr de vouloir supprimer l'adresse suivante ?</p>
+    <p><strong>Numéro : </strong>{{ adresse.no }}</p>
+    <p><strong>Adresse : </strong>{{ adresse.adresse }}</p>
+    <form method="post">
+        {% csrf_token %}
+        <div class="text-center mt-3">
+            <button type="submit" class="btn btn-danger btn-lg">Confirmer la Suppression</button>
+        </div>
+    </form>
+    <div class="text-center mt-4">
+        <a href="{% url 'details' 'utilisateur' request.user.id %}" class="btn btn-outline-secondary">Retour au profil</a>
+
+    </div>
+</div>
+{% endblock %}

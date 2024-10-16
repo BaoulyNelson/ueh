@@ -1,0 +1,107 @@
+/* Styles de base */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    background-color: #f4f4f4;
+}
+
+
+.navbar {
+    background-color: #2196F3;
+    padding: 10px;
+}
+
+.navbar ul {
+    list-style-type: none;
+    display: flex; /* Utilisation de Flexbox */
+    justify-content: space-around;
+    flex-wrap: nowrap; /* Empêche le passage à la ligne */
+    overflow: hidden; /* Masque tout débordement */
+}
+
+.navbar ul li {
+    display: inline;
+}
+
+.navbar ul li a {
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+    padding: 10px 15px; /* Ajout de padding */
+    font-size: 14px; /* Taille de police */
+}
+
+
+
+
+
+
+
+
+/* Menu hamburger pour petits écrans */
+.hamburger {
+    display: none;
+    font-size: 34px;
+    cursor: pointer;
+    color: #fff;
+}
+
+/* Panneau latéral masqué pour mobile */
+.side-panel {
+    height: 100%;
+    width: 0;
+    position: fixed;
+    z-index: 1001;
+    top: 0;
+    left: 0;
+    background-color: #f4f4f4;
+    overflow-x: hidden;
+    transition: 0.5s;
+    padding-top: 60px;
+}
+
+.side-panel a {
+    padding: 10px 15px;
+    text-decoration: none;
+    color: #003366;
+    display: block;
+    transition: 0.3s;
+}
+
+.side-panel a:hover {
+    color: #00539C;
+}
+
+.side-panel .close-btn {
+    position: absolute;
+    top: 20px;
+    right: 25px;
+    margin-left: 50px;
+    cursor: pointer;
+    font-size: 24px;
+}
+
+/* Afficher le panneau latéral */
+.side-panel.open {
+    width: 100%; /* Remplacez par 100% lorsque le panneau est ouvert */
+}
+
+
+/* Afficher le hamburger et masquer le menu classique sur petits écrans */
+@media screen and (max-width: 768px) {
+    .hamburger {
+        display: block;
+    }
+
+    .nav-links {
+        display: none;
+    }
+}
+
+
+
