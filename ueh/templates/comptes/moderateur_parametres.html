@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+{% block title %}Paramètres{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card shadow rounded-4">
+                <div class="card-header bg-primary text-white rounded-top-4">
+                    <h4 class="mb-0">Paramètres du compte</h4>
+                </div>
+                <div class="card-body">
+                    <form method="post">
+                        {% csrf_token %}
+                        <div class="mb-4">
+                            <label class="form-label fw-bold"><i class="bi bi-person-fill"></i> Nom complet</label>
+                            <input type="text" class="form-control bg-light" value="{{ request.user.get_full_name }}" disabled>
+                        </div>
+                        <div class="mb-4">
+                            <label class="form-label fw-bold"><i class="bi bi-envelope-fill"></i> Adresse Email</label>
+                            <input type="email" class="form-control bg-light" value="{{ request.user.email }}" disabled>
+                        </div>
+                        <div class="mb-4">
+                            <label class="form-label fw-bold"><i class="bi bi-lock-fill"></i> Changer le mot de passe</label><br>
+                            <a href="{% url 'password_change' %}" class="btn btn-outline-warning">
+                                <i class="bi bi-pencil-square"></i> Modifier le mot de passe
+                            </a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

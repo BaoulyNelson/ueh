@@ -1,0 +1,6 @@
+<form method="post" action="{% url 'e_document' %}">
+    {% csrf_token %}
+    {{ form.as_p }}  <!-- Affiche le formulaire avec les balises <p> -->
+
+    <button type="submit">RECHERCHER</button>
+</form>

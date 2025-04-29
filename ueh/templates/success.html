@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+
+{% block title %}Succès{% endblock %}
+
+{% block content %}
+<div class="container text-center mt-5">
+    <h2 class="text-success">✅ Recherche réussie !</h2>
+    <p>Vos documents ont été trouvés.</p>
+    <a href="{% url 'e_document' %}" class="btn btn-primary">Retour</a>
+</div>
+{% endblock %}

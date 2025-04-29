@@ -1,12 +1,113 @@
 {% extends "base.html" %}
+{% load static %}
 
-{% block title %}Bienvenue à l'UEH{% endblock %}
+{% block title %}Actualités{% endblock %}
+
 
 {% block content %}
-{% load static %}
-<link rel="stylesheet" href="{% static 'css/index.css' %}">
 
+<!-- Hero Section -->
+<section id="accueil" class="hero">
+    <div class="container">
+        <h1>Bureau National des Examens d'État</h1>
+        <p>Le BUNEXE est l'organisme responsable de la gestion et de l'organisation des examens d'État pour les niveaux secondaire et universitaire en Haïti.</p>
+        <div class="hero-buttons">
+            <a href="{% url 'examens' %}" class="btn">Calendrier des Examens</a>
+            <a href="{% url 'contact' %}" class="btn btn-accent">Nous Contacter</a>
+        </div>
+    </div>
+</section>
 
+<div class="container-fluid fade-in">
+    <div class="row">
+        <!-- Articles Principaux -->
+        <div class="col-md-8 main-articles">
+            <h1 class="mb-4 border-bottom pb-2">Articles Principaux</h1>
+            {% for article in main_articles %}
+                <div class="big-article mb-4 pb-3 border-bottom">
+                    <a href="{% url 'article_detail' article.id %}">
+                        <img src="{{ article.image.url }}" alt="{{ article.title }}" class="img-fluid rounded" style="height: 320px; object-fit: cover; width: 100%;">
+                    </a>
+                    <div class="article-content mt-2">
+                        <h2 class="fs-4">
+                            <a href="{% url 'article_detail' article.id %}">{{ article.title }}</a>
+                        </h2>
+                        <p class="text-muted small">{{ article.date|date:"d F Y" }}</p>
+                    </div>
+                </div>
+            {% endfor %}
+            
+            <!-- Pagination -->
+            <nav aria-label="Pagination" class="mt-4">
+                <ul class="pagination justify-content-center">
+                    {% if main_articles.has_previous %}
+                        <li class="page-item">
+                            <a class="page-link" href="?page=1">&laquo; Premier</a>
+                        </li>
+                        <li class="page-item">
+                            <a class="page-link" href="?page={{ main_articles.previous_page_number }}">Précédent</a>
+                        </li>
+                    {% endif %}
+                    
+                    <li class="page-item disabled">
+                        <span class="page-link">Page {{ main_articles.number }} sur {{ main_articles.paginator.num_pages }}</span>
+                    </li>
+                    
+                    {% if main_articles.has_next %}
+                        <li class="page-item">
+                            <a class="page-link" href="?page={{ main_articles.next_page_number }}">Suivant</a>
+                        </li>
+                        <li class="page-item">
+                            <a class="page-link" href="?page={{ main_articles.paginator.num_pages }}">Dernier &raquo;</a>
+                        </li>
+                    {% endif %}
+                </ul>
+            </nav>
+        </div>
 
+        <!-- Articles Secondaires -->
+        <div class="col-md-4 side-articles">
+            <h1 class="mb-4 border-bottom pb-2">Lire Egalement </h1>
+            {% for article in side_articles %}
+                <div class="small-article d-flex align-items-center mb-3 border-bottom pb-2">
+                    <a href="{% url 'article_detail' article.id %}">
+                        <img src="{{ article.image.url }}" alt="{{ article.title }}" class="rounded" width="80" height="70" style="object-fit: cover;">
+                    </a>
+                    <div class="ms-3">
+                        <h4 class="fs-6">
+                            <a href="{% url 'article_detail' article.id %}">{{ article.title }}</a>
+                        </h4>
+                        <p class="text-muted small">{{ article.date|date:"d F Y" }}</p>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+
+<h3 class="mt-5 mb-4">🗨️ Derniers commentaires</h3>
+
+<div class="row row-cols-1 g-3">
+    {% for commentaire in commentaires %}
+    <div class="col">
+        <div class="card shadow-sm border-0 rounded-4">
+            <div class="card-body">
+                <div class="d-flex justify-content-between align-items-center mb-2">
+                    <h6 class="mb-0">
+                        <i class="bi bi-person-circle text-primary"></i>
+                        <strong>{{ commentaire.auteur.username }}</strong>
+                    </h6>
+                    <span class="badge bg-secondary">{{ commentaire.date_poste|date:"d/m/Y H:i" }}</span>
+                </div>
+                <p class="mb-0 text-muted">{{ commentaire.texte }}</p>
+            </div>
+        </div>
+    </div>
+    {% empty %}
+    <div class="text-center text-muted">
+        <i class="bi bi-chat-left-dots"></i> Aucun commentaire pour l’instant.
+    </div>
+    {% endfor %}
+</div>
 
 {% endblock %}

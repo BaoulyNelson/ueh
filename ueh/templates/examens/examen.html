@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+
+{% block title %}Regarder nos Calendriers{% endblock %}
+
+{% block content %}
+
+<!-- Examens Section -->
+<section id="examens" class="section">
+    <div class="container">
+        <h2 class="section-title">Calendrier des Examens</h2>
+        <div class="grid grid-3">
+            {% for examen in examens %}
+                <div class="card exam-card">
+                    <div class="exam-content">
+                        <span class="exam-date">{{ examen.date }}</span>
+                        <h3>{{ examen.titre }}</h3>
+                        <p>{{ examen.description }}</p>
+                        <span class="exam-status status-{{ examen.status }}">
+                            {% if examen.status == 'completed' %}Terminé{% elif examen.status == 'active' %}En cours{% else %}À venir{% endif %}
+                        </span>
+                    </div>
+                </div>
+            {% empty %}
+                <p>Aucun examen trouvé.</p>
+            {% endfor %}
+        </div>
+        <div class="text-center" style="margin-top: 40px;">
+            <a href="{% url 'examens' %}" class="btn">Voir Tous les Examens</a>
+        </div>
+    </div>
+</section>
+
+<!-- Statistiques Section -->
+<section class="section">
+    <div class="container">
+        <h2 class="section-title">Nos Chiffres</h2>
+        <div class="stats-container">
+            <div class="stat-item">
+                <div class="stat-number">150,000+</div>
+                <div class="stat-title">Candidats par an</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number">10</div>
+                <div class="stat-title">Départements couverts</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number">500+</div>
+                <div class="stat-title">Centres d'examen</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number">95%</div>
+                <div class="stat-title">Taux de fiabilité</div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

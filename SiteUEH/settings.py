@@ -11,21 +11,26 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 
 from pathlib import Path
+import os
+from dotenv import load_dotenv
 
-# Build paths inside the project like this: BASE_DIR / 'subdir'.
+# Charger le fichier .env
+load_dotenv()
+
+# Utiliser les variables d'environnement
+SECRET_KEY = os.getenv('DJANGO_SECRET_KEY')  # Récupérer la clé secrète depuis .env
+DEBUG = os.getenv('DEBUG') == 'True'  # Convertir en booléen
+ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS', '127.0.0.1,localhost').split(',')
+
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+# Assure-toi que SECRET_KEY est défini dans le fichier .env
+if not SECRET_KEY:
+    raise ValueError("La variable d'environnement 'DJANGO_SECRET_KEY' doit être définie dans le fichier .env")
 
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
-
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-(n_ol_zpiq!t(ah!m6cp+luzwl@k0-3e#qolntrpjv*)be_1*_'
-
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
-
-ALLOWED_HOSTS = []
+# CONFIGURATION DE BASE
+DEBUG = DEBUG  # Utilise la valeur de DEBUG obtenue depuis .env
+ALLOWED_HOSTS = ALLOWED_HOSTS  # Liste des hôtes autorisés (par exemple, 'localhost, .example.com')
 
 
 # Application definition
@@ -37,6 +42,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'widget_tweaks',
     'ueh',
 ]
 
@@ -55,7 +61,7 @@ ROOT_URLCONF = 'SiteUEH.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [BASE_DIR / 'templates'],  # Chemin vers le dossier des templates
+        'DIRS': [BASE_DIR / 'ueh/templates'],  # Chemin vers le dossier des templates
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -74,17 +80,17 @@ WSGI_APPLICATION = 'SiteUEH.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'ueh',
-        'USER': 'root',  # Remplace par ton nom d'utilisateur MySQL
-        'PASSWORD': '',  # Remplace par ton mot de passe MySQL (s'il y en a un)
-        'HOST': '127.0.0.1',  # Ou 'localhost' si tu utilises le serveur local de MySQL via XAMPP
-        'PORT': '3306',  # Le port par défaut de MySQL est 3306
+        'NAME': os.getenv('DB_NAME'),
+        'USER': os.getenv('DB_USER'),
+        'PASSWORD': os.getenv('DB_PASSWORD'),
+        'HOST': os.getenv('DB_HOST', 'localhost'),
+        'PORT': os.getenv('DB_PORT', '3306'),
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
@@ -120,8 +126,27 @@ TIME_ZONE = 'America/Port-au-Prince'
 USE_I18N = True
 
 USE_TZ = True
+import os
+
+# Configuration email
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+
+# Paramètres SMTP
+EMAIL_HOST = os.getenv('EMAIL_HOST', 'smtp.gmail.com')  # Valeur par défaut : smtp.gmail.com
+EMAIL_PORT = int(os.getenv('EMAIL_PORT', '587'))  # Convertir en entier, valeur par défaut : 587
+EMAIL_USE_TLS = True
+
+# Utilisateur et mot de passe
+EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER')  # Récupère l'email de l'utilisateur
+EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD')  # Récupère le mot de passe
+
+# Valeur par défaut pour l'email de l'expéditeur
+DEFAULT_FROM_EMAIL = os.getenv('DEFAULT_FROM_EMAIL', 'elconquistadorbaoulyn@gmail.com')  # Valeur par défaut
+
 
 LOGIN_URL = '/connexion/'  # URL de la page de connexion
+LOGOUT_REDIRECT_URL = 'accueil'
+
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 

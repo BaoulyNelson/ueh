@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+
+{% block title %}Demande de résultat Bacc{% endblock %}
+
+{% block content %}
+{% load static %}
+
+<div class="container d-flex justify-content-center align-items-center vh-100">
+  <div class="card p-4 shadow-lg" style="max-width: 500px; width: 100%;">
+    <h2 class="text-center mb-4">Demande de résultat bac - <span id="year"></span></h2>
+
+    <form id="baccalaureat-form">
+      {% csrf_token %}
+
+      <!-- Champ Matricule -->
+      <div class="mb-3">
+        <input type="text" class="form-control text-center border-2 border-warning fw-bold fs-5" 
+               name="matricule" placeholder="Matricule ici" pattern="^\d{10}$" title="Le matricule doit être composé de 10 chiffres." required>
+      </div>
+
+      <!-- Champ Date de Naissance -->
+      <div class="mb-3">
+        <input type="date" class="form-control text-center border-2 border-warning fw-bold fs-5" 
+               name="date_naissance" required>
+      </div>
+
+      <p class="text-center">Sélectionnez un programme :</p>
+
+      <!-- Boutons de sélection -->
+      <div class="d-flex justify-content-between">
+        <label class="btn btn-success w-100 me-2">
+          <input type="radio" name="programme" value="BAC_UNIQUE" class="d-none" required>
+          BAC UNIQUE
+        </label>
+
+        <label class="btn btn-primary w-100 me-2">
+          <input type="radio" name="programme" value="PERM_NS4" class="d-none">
+          PERM NS4
+        </label>
+
+        <label class="btn btn-warning w-100">
+          <input type="radio" name="programme" value="PERM_PHILO" class="d-none">
+          PERM PHILO
+        </label>
+      </div>
+    </form>
+  </div>
+</div>
+
+<script src="{% static 'js/demande_resultat_bacc.js' %}"></script>
+{% endblock %}

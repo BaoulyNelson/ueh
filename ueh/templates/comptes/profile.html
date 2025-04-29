@@ -1,0 +1,72 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="row g-4">
+        <!-- Profil utilisateur -->
+        <div class="col-md-4">
+            <div class="card text-center">
+                <div class="card-body">
+                    <img src="{% static 'images/favicon.ico' %}" class="rounded-circle mb-3" alt="Photo de Profil" style="width: 120px; height: 120px; object-fit: cover;">
+                    <h3 class="card-title">{{ user.username }}</h3>
+                    <p class="text-muted">{{ user.email }}</p>
+                    <a href="{% url 'confirmer_deconnexion' %}" class="btn btn-danger mt-3">Se déconnecter</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Informations personnelles -->
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title mb-4">Informations Personnelles</h4>
+                    <form>
+                        <div class="row g-3">
+                            <!-- Nom d'utilisateur -->
+                            <div class="col-md-6">
+                                <label for="username" class="form-label">Nom d'utilisateur</label>
+                                <input type="text" readonly class="form-control-plaintext bg-light" id="username" value="{{ user.username }}">
+                            </div>
+
+                            <!-- Email -->
+                            <div class="col-md-6">
+                                <label for="email" class="form-label">Email</label>
+                                <input type="email" readonly class="form-control-plaintext bg-light" id="email" value="{{ user.email }}">
+                            </div>
+
+                            <!-- Prénom -->
+                            <div class="col-md-6">
+                                <label for="first_name" class="form-label">Prénom</label>
+                                <input type="text" readonly class="form-control-plaintext bg-light" id="first_name" value="{{ user.first_name }}">
+                            </div>
+
+                            <!-- Nom -->
+                            <div class="col-md-6">
+                                <label for="last_name" class="form-label">Nom</label>
+                                <input type="text" readonly class="form-control-plaintext bg-light" id="last_name" value="{{ user.last_name }}">
+                            </div>
+
+                            <!-- Dernière connexion -->
+                            <div class="col-md-6">
+                                <label for="last_login" class="form-label">Dernière connexion</label>
+                                <input type="text" readonly class="form-control-plaintext bg-light" id="last_login" value="{{ user.last_login }}">
+                            </div>
+
+                            <!-- Date d'inscription -->
+                            <div class="col-md-6">
+                                <label for="date_joined" class="form-label">Date d'inscription</label>
+                                <input type="text" readonly class="form-control-plaintext bg-light" id="date_joined" value="{{ user.date_joined }}">
+                            </div>
+                        </div>
+
+                        <div class="mt-4 text-center">
+                            <a href="{% url 'edit_profile' %}" class="btn btn-primary">Modifier les informations</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

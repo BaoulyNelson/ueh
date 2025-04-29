@@ -1,38 +1,50 @@
-{% extends 'base.html' %} 
+{% extends 'base.html' %}
 
 {% block content %}
 {% load static %}
 <link rel="stylesheet" href="{% static 'css/comptes.css' %}">
-<h2>Se connecter</h2>
 
-<!-- Bloc pour afficher les messages -->
-{% if messages %}
-<ul>
-    {% for message in messages %}
-        <li class="{% if message.tags %} {{ message.tags }} {% endif %}">{{ message }}</li>
-    {% endfor %}
-</ul>
-{% endif %}
+<div class="auth-container">
+    <div class="auth-box">
+        <h2 class="auth-title">Se connecter</h2>
 
-<form method="post">
-    {% csrf_token %}
-    {{ formulaire.as_p }}
+      
+        <form method="post" class="auth-form">
+            {% csrf_token %}
+            {{ formulaire.as_p }}
 
-    {% if formulaire.errors %}
-        <ul>
-        {% for field in formulaire %}
-            {% for error in field.errors %}
-                <li>{{ error }}</li>
-            {% endfor %}
-        {% endfor %}
-        {% for error in formulaire.non_field_errors %}
-            <li>{{ error }}</li>
-        {% endfor %}
-        </ul>
-    {% endif %}
+            {% if formulaire.errors %}
+                <div>
+                    <h4>Erreurs de formulaire</h4>
+                    <ul>
+                        {% for field in formulaire %}
+                            {% for error in field.errors %}
+                                <li>{{ error }}</li>
+                            {% endfor %}
+                        {% endfor %}
+                        {% for error in formulaire.non_field_errors %}
+                            <li>{{ error }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            {% endif %}
 
-    <button type="submit">Se connecter</button>
-</form>
+            <!-- Checkbox "Se souvenir de moi" -->
+            <label>
+                <input type="checkbox" name="remember_me"> Se souvenir de moi
+            </label>
 
-<a href="{% url 'inscription' %}">Pas encore de compte ? Créez-en un.</a>
+            <button type="submit" class="btn-submit">Se connecter</button>
+        </form>
+
+        <p class="switch-prompt">
+            Mot de passe oublié ? <a href="{% url 'password_reset' %}">Réinitialisez-le ici.</a>
+        </p>
+        
+        <p class="switch-prompt">
+            Pas encore de compte ? <a href="{% url 'inscription' %}">Créez-en un.</a>
+        </p>
+    </div>
+</div>
+
 {% endblock %}

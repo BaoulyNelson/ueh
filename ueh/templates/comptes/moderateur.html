@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-10">
+            <div class="card shadow rounded-4">
+                <div class="card-header bg-primary text-white rounded-top-4">
+                    <h4 class="mb-0">Tableau de bord du modérateur</h4>
+                </div>
+                <div class="card-body">
+                    <p class="lead">Bienvenue sur votre interface de modération. Vous pouvez gérer les contenus, utilisateurs ou autres tâches attribuées ici.</p>
+
+                    <div class="row g-4 mt-4">
+                        <div class="col-md-4">
+                            <div class="card border-0 shadow-sm h-100">
+                                <div class="card-body text-center">
+                                    <i class="fas fa-users fa-2x text-primary mb-3"></i>
+                                    <h5 class="card-title">Utilisateurs</h5>
+                                    <p class="card-text">Gérer les utilisateurs enregistrés.</p>
+                                    <a href="{% url 'utilisateur_liste' %}" class="btn btn-outline-primary btn-sm">Voir</a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-4">
+                            <div class="card border-0 shadow-sm h-100">
+                                <div class="card-body text-center">
+                                    <i class="fas fa-comments fa-2x text-success mb-3"></i>
+                                    <h5 class="card-title">Commentaires</h5>
+                                    <p class="card-text">Modérer les commentaires postés.</p>
+                                    <a href="{% url 'commentaires_moderation' %}" class="btn btn-outline-success btn-sm">Gérer</a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-4">
+                            <div class="card border-0 shadow-sm h-100">
+                                <div class="card-body text-center">
+                                    <i class="fas fa-cogs fa-2x text-warning mb-3"></i>
+                                    <h5 class="card-title">Paramètres</h5>
+                                    <p class="card-text">Configurer les préférences du tableau de bord.</p>
+                                    <a href="{% url 'moderateur_parametres' %}" class="btn btn-outline-warning btn-sm">Configurer</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="card-footer text-muted text-end">
+                    <a href="{% url 'confirmer_deconnexion' %}" class="btn btn-danger mt-3">Se déconnecter</a>
+                    Dernière connexion : {{ request.user.last_login|date:"d M Y à H:i" }}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

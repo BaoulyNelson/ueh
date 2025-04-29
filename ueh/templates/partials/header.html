@@ -1,42 +1,53 @@
-
-{% load static %}
-  
-<link rel="stylesheet" href="{% static 'css/navbar.css' %}">
-<header>
-
-    <nav class="navbar">
-        <div class="logo">
-            <a href="{% url 'accueil' %}" style="color: #f1c40f; font-size: 2rem; font-weight: bold; text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); letter-spacing: 2px; text-transform: uppercase; text-decoration: none;">
-                MENFP-BUNEXE
-            </a>
-        </div>
-        
-        
-        <ul>
-            <li>
-                {% if user.is_authenticated %}
-                    <!-- Lien vers le profil de l'utilisateur -->
-                    <a href="{% url 'details' 'utilisateur' 0 %}" title="Voir mon profil" aria-label="Mon profil">
-                        Mon profil
-                    </a>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <nav class="navbar">
+                <div class="logo">
+                    <div class="logo-text">
+                        BUNEXE <span>Bureau National des Examens d'État</span>
+                    </div>
+                </div>
+            
+                <button class="navbar-toggler d-lg-none mobile-menu-btn" type="button">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                
+    
+                <ul class="nav-links">
+                    <li><a href="{% url 'accueil' %}">Accueil</a></li>
+                    <li><a href="{% url 'accueil' %}">{% if user.is_authenticated %}
+                        {% if user.is_superuser %}
+                            <!-- Superutilisateur connecté -->
+                            <a class="nav-link" href="/admin/" title="Administration" aria-label="Administration">
+                                <i class="bi bi-shield-lock-fill text-danger"></i> Admin
+                            </a>
+                        {% elif user.is_staff %}
+                            <!-- Staff (Modérateur) connecté -->
+                            <a class="nav-link" href="{% url 'moderateur_dashboard' %}" title="Modérateur" aria-label="Modérateur">
+                                <i class="bi bi-person-badge-fill text-warning"></i> Modérateur
+                            </a>
+                        {% else %}
+                            <!-- Utilisateur standard connecté -->
+                            <a class="nav-link" href="{% url 'profile' %}" title="Mon profil" aria-label="Mon profil">
+                                <i class="bi bi-person-circle text-primary"></i> Mon Profil
+                            </a>
+                        {% endif %}
+                    {% else %}
+                        <!-- Utilisateur non connecté -->
+                        <a class="nav-link" href="{% url 'connexion' %}" title="Se connecter" aria-label="Se connecter">
+                            <i class="bi bi-box-arrow-in-right text-secondary"></i> S'identifier
+                        </a>
+                    {% endif %}</a></li>
+                    <li><a href="{% url 'demande_resultat_bac' %}">Demande Résultat bac</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{% url 'e_document' %}">e-document</a></li>
+                 
+                    <li><a href="{% url 'verification_diplome' %}">Vérification diplôme</a></li>
+                   
+                   
                     
-                {% else %}
-                    <!-- Lien pour se connecter -->
-                    <a href="{% url 'connexion' %}" title="Se connecter" aria-label="Se connecter">
-                        S'identifier
-                    </a>
-                {% endif %}
-            </li>
-            
-            <li><a href="{% url 'demande_resultat_bac' %}">Demande Résultat bac</a></li>
-            
-            <li><a href="{% url 'e_document' %}">e-document</a></li>
-            <li><a href="{% url 'verification_diplome' %}">Vérification diplôme</a></li>  
+                </ul>
+            </nav>
+        </div>
+    </header>
 
-         
-        </ul>
-    </nav>
 
-      
-        
-</header>

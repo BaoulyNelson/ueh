@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% block title %}Modération des commentaires{% endblock %}
+{% block content %}
+<h2 class="mb-4">Commentaires à modérer</h2>
+<div class="list-group">
+    {% for commentaire in commentaires %}
+    <div class="list-group-item">
+        <p><strong>{{ commentaire.auteur }}</strong> — {{ commentaire.date_poste|date:"d/m/Y H:i" }}</p>
+        <p>{{ commentaire.texte }}</p>
+        <form method="post" action="{% url 'approuver_commentaire' commentaire.id %}" class="d-inline">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-success btn-sm">Approuver</button>
+        </form>
+        <form method="post" action="{% url 'supprimer_commentaire' commentaire.id %}" class="d-inline">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-danger btn-sm">Supprimer</button>
+        </form>
+        
+    </div>
+    {% empty %}
+    <div class="alert alert-info">Aucun commentaire en attente.</div>
+    {% endfor %}
+</div>
+{% endblock %}

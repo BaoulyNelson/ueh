@@ -1,0 +1,72 @@
+{% extends "base.html" %}
+{% load widget_tweaks %}
+
+{% block title %}Contactez-nous{% endblock %}
+
+{% block content %}
+<section id="contact" class="py-5">
+    <div class="container">
+        <h2 class="text-center mb-5">Contactez-nous</h2>
+
+        <div class="row">
+            <!-- Informations de contact -->
+            <div class="col-md-6 mb-4">
+                <div class="card p-4 shadow-sm">
+                    <div class="mb-3 d-flex">
+                        <i class="fas fa-map-marker-alt fa-2x text-primary me-3"></i>
+                        <div>
+                            <h5>Adresse</h5>
+                            <p>5, Rue Capois, Port-au-Prince, Haïti</p>
+                        </div>
+                    </div>
+
+                    <div class="mb-3 d-flex">
+                        <i class="fas fa-phone fa-2x text-primary me-3"></i>
+                        <div>
+                            <h5>Téléphone</h5>
+                            <p>+509 2222-3333<br>+509 3444-5555</p>
+                        </div>
+                    </div>
+
+                    <div class="mb-3 d-flex">
+                        <i class="fas fa-envelope fa-2x text-primary me-3"></i>
+                        <div>
+                            <h5>Email</h5>
+                            <p>info@bunexe.gouv.ht<br>contact@bunexe.gouv.ht</p>
+                        </div>
+                    </div>
+
+                    <div class="d-flex">
+                        <i class="fas fa-clock fa-2x text-primary me-3"></i>
+                        <div>
+                            <h5>Heures d'ouverture</h5>
+                            <p>Lundi - Vendredi: 8h00 - 16h00<br>Samedi: 9h00 - 12h00</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Formulaire de contact -->
+            <div class="col-md-6">
+                <div class="card p-4 shadow-sm">
+                    <form method="post" novalidate>
+                        {% csrf_token %}
+
+                        {% for field in form %}
+                        <div class="mb-3">
+                            <label for="{{ field.id_for_label }}" class="form-label">{{ field.label }}</label>
+                            {{ field|add_class:"form-control" }}
+                            {% if field.errors %}
+                                <div class="text-danger small mt-1">{{ field.errors|striptags }}</div>
+                            {% endif %}
+                        </div>
+                        {% endfor %}
+
+                        <button type="submit" class="btn btn-primary w-100">Envoyer le message</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
