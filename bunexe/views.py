@@ -9,7 +9,7 @@ from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth.forms import UserChangeForm
 from django.contrib.auth.models import User  # ou ton modèle personnalisé
 from django.views.decorators.http import require_POST
-from ueh.utils import ajouter_message
+from bunexe.utils import ajouter_message
 
 from datetime import datetime
 import json

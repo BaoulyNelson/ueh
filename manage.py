@@ -1,5 +1,5 @@
 import warnings
-warnings.filterwarnings('ignore', message="Model 'ueh.*' was already registered")
+warnings.filterwarnings('ignore', message="Model 'bunexe.*' was already registered")
 
 
 #!/usr/bin/env python
@@ -10,7 +10,7 @@ import sys
 
 def main():
     """Run administrative tasks."""
-    os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'SiteUEH.settings')
+    os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'menfp.settings')
     try:
         from django.core.management import execute_from_command_line
     except ImportError as exc:
