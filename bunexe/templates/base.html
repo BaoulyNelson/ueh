@@ -38,6 +38,16 @@
     {% endfor %}
 </div>
 {% endif %}
+
+    <!-- Affichage des erreurs -->
+      {% if erreur %}
+          <div class="alert alert-danger text-center">
+              <i class="fas fa-exclamation-triangle"></i>
+              {{ erreur }}
+          </div>
+      {% endif %}
+
+      
     <div class="container-fluid">
       <div class="row">
         <main>

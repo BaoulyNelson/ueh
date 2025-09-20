@@ -107,27 +107,14 @@ class DocumentSearchForm(forms.Form):
 
 class BaccalaureatForm(forms.Form):
     matricule = forms.CharField(
-        label="",
-        max_length=20,
+        label="Numéro d'ordre",
+        max_length=10,   # côté Django
+        min_length=10,   # côté Django (optionnel si tu veux exactement 10)
         widget=forms.TextInput(attrs={
             'placeholder': 'Matricule ici',
-            'class': 'matricule-input'  # Classe CSS
+            'class': 'matricule-input',
+            'maxlength': '10',        # côté HTML : impossible de taper plus de 10
+            'pattern': '[0-9]{10}',   # côté HTML : validation → seulement 10 chiffres
+            'title': 'Entrez exactement 10 chiffres'  # info bulle
         })
-    )
-    date_naissance = forms.DateField(
-        label="Date de naissance",
-        widget=forms.DateInput(
-            attrs={
-                'type': 'date',  # Correspond à <input type="date">
-                'class': 'form-control text-center border-2 border-warning fw-bold fs-5'
-            }
-        )
-    )
-    programme = forms.ChoiceField(
-        choices=[
-            ("BAC_UNIQUE", "BAC UNIQUE"),
-            ("PERM_NS4", "PERMANENT. NS4"),
-            ("PERM_PHILO", "PERMANENT PHILO"),
-        ],
-        widget=forms.RadioSelect(attrs={'class': 'programme-select'})
     )

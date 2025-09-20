@@ -1,20 +1,25 @@
-.env
-
-# Ignorer l'environnement virtuel
+# Environnements virtuels
+venv/
 env/
-.env/
 
-# Fichiers de cache et temporaires
+# Fichiers Python
 __pycache__/
 *.pyc
 *.pyo
 *.pyd
+*.sqlite3
 
-# Fichiers spécifiques à l'IDE
+# Config Django / secrets
+.env
+
+# Static & media
+/media/
+/staticfiles/
+
+# VSCode / PyCharm
 .vscode/
 .idea/
-*.sublime-workspace
 
-# Fichiers de logs et bases de données locales
-*.log
-db.sqlite3
+# OS
+.DS_Store
+Thumbs.db

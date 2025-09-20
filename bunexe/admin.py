@@ -24,7 +24,35 @@ class CommentaireAdmin(admin.ModelAdmin):
     list_filter = ('approbation',)
     search_fields = ('texte', 'auteur__username')
 
-# Enregistre le modèle Article avec l'administration Django
-admin.site.register(Bachelier)
+# admin.py
+from django.contrib import admin
+from .models import Bachelier
+
+from django.contrib import admin
+from .models import Bachelier
+
+@admin.register(Bachelier)
+class BachelierAdmin(admin.ModelAdmin):
+    list_display = ("matricule", "nom", "prenom", "programme", "get_moyenne", "get_mention")
+    search_fields = ("matricule", "nom", "prenom")
+    list_filter = ("programme",)
+    ordering = ("nom",)
+    fields = (
+        "matricule",
+        "nom",
+        "prenom",
+        "date_naissance",
+        "programme",
+        "creole",
+        "mathematiques",
+        "physique",
+        "svt",
+        "chimie",
+        "philosophie",
+        "anglais_espagnol",
+        "histoire_geo",
+        "economie",
+    )
+    readonly_fields = ("get_moyenne", "get_mention")
 
 admin.site.register(Article, ArticleAdmin)

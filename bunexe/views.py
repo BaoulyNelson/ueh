@@ -10,13 +10,14 @@ from django.contrib.auth.forms import UserChangeForm
 from django.contrib.auth.models import User  # ou ton modèle personnalisé
 from django.views.decorators.http import require_POST
 from bunexe.utils import ajouter_message
+from django.urls import reverse
 
 from datetime import datetime
 import json
 import base64
 import csv
 
-from .models import Bachelier, Article, Examen,Commentaire
+from .models import Bachelier, Article, Examen,Commentaire,Verification
 from .forms import (
     FormulaireCreationUtilisateur,
     FormulaireAuthentificationPersonnalise,
@@ -213,24 +214,122 @@ def success_page(request):
     return render(request, 'success.html')  # Assure-toi d’avoir un fichier success.html
 
 
+from django.shortcuts import render
+from datetime import datetime
+from .models import Bachelier
+from .forms import DocumentSearchForm
+
 def e_document(request):
     current_year = datetime.now().year
-    years = list(range(1980, current_year + 1))  
+    years = list(range(1980, current_year + 1))  # années disponibles
+    releve = None
+    erreur = None
 
     if request.method == "POST":
         form = DocumentSearchForm(request.POST, years=years)
         if form.is_valid():
-            return redirect('success_page')
+            annee = form.cleaned_data['annee']
+            matricule = form.cleaned_data['matricule']
+            nom = form.cleaned_data['nom']
+            prenom = form.cleaned_data['prenom']
+
+            try:
+                bachelier = Bachelier.objects.get(
+                    matricule=matricule,
+                    nom__iexact=nom,
+                    prenom__iexact=prenom,
+                    annee_bac=annee
+                )
+                releve = {
+                    "nom": bachelier.nom.upper(),
+                    "prenom": bachelier.prenom.title(),
+                    "date_naissance": bachelier.date_naissance,
+                    "annee": annee,
+                    "total": bachelier.calcul_total(),
+                    "max_total": 1900,  # ou 1900 selon ton calcul
+                    "moyenne": bachelier.moyenne,
+                    "mention": bachelier.mention,
+                    "programme": bachelier.programme,
+                }
+            except Bachelier.DoesNotExist:
+                erreur = "Aucun résultat trouvé pour ces informations."
     else:
         form = DocumentSearchForm(years=years)
 
-    return render(request, 'resultats/e_document.html', {'form': form})
+    return render(request, 'resultats/e_document.html', {
+        'form': form,
+        'releve': releve,
+        'erreur': erreur
+    })
 
 
-@login_required
+
+
+
 def demande_resultat_form(request):
-    form = BaccalaureatForm()
-    return render(request, 'resultats/demande_resultat_bacc.html', {'form': form})
+    bachelier = None
+    erreur = None
+
+    # Toujours récupérer ou créer l'objet Statistique
+    stats, created = Verification.objects.get_or_create(id=1)
+
+    if request.method == "POST":
+        matricule = request.POST.get("matricule", "").strip()
+
+        # Vérification du matricule
+        if len(matricule) != 10 or not matricule.isdigit():
+            request.session["erreur"] = "Il faut saisir un matricule ayant 10 chiffres"
+        else:
+            # Incrémenter le compteur global
+            stats.verifications += 1
+            stats.save()
+
+            try:
+                bachelier = Bachelier.objects.get(matricule=matricule)
+                request.session["last_bachelier"] = bachelier.id
+            except Bachelier.DoesNotExist:
+                request.session["erreur"] = "Pas de données pour l'instant"
+
+        return redirect(reverse("demande_resultat_bac"))
+
+    # Après redirection, récupérer la session
+    if "last_bachelier" in request.session:
+        try:
+            bachelier = Bachelier.objects.get(id=request.session.pop("last_bachelier"))
+        except Bachelier.DoesNotExist:
+            pass
+
+    if "erreur" in request.session:
+        erreur = request.session.pop("erreur")
+
+    # Préparer les matières avec le seuil de moitié du coefficient
+    matieres = []
+    if bachelier:
+        for champ, coef, nom in [
+            ("creole", 200, "Créole"),
+            ("mathematiques", 200, "Mathématiques"),
+            ("physique", 100, "Physique"),
+            ("svt", 100, "SVT"),
+            ("chimie", 100, "Chimie"),
+            ("philosophie", 200, "Philosophie"),
+            ("anglais_espagnol", 200, "Anglais / Espagnol"),
+            ("histoire_geo", 400, "Histoire & Géographie"),
+            ("economie", 400, "Économie"),
+        ]:
+            note = getattr(bachelier, champ)
+            seuil = coef / 2
+            matieres.append((nom, note, coef, seuil))
+
+    # Récupérer à nouveau le compteur à jour pour l'affichage
+    stats.refresh_from_db()
+
+    return render(request, "resultats/demande_resultat_bacc.html", {
+        "form": BaccalaureatForm(),
+        "bachelier": bachelier,
+        "matieres": matieres,
+        "erreur": erreur,
+        "verifications": stats.verifications,
+    })
 
 
 
